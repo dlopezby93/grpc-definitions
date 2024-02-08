@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'com.google.protobuf' version '0.8.13'
+    id 'idea'
+}
+
+group 'org.demo'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    implementation 'io.grpc:grpc-protobuf:1.7.0'
+    implementation 'io.grpc:grpc-stub:1.7.0'
+    implementation 'io.grpc:grpc-netty:1.7.0'
+}
+
+protobuf{
+    protoc {
+        //artifact = "com.google.protobuf:protoc:3.4.0"
+        if (osdetector.os == "osx") {
+            artifact = 'com.google.protobuf:protoc:3.14.0:osx-x86_64'
+        } else {
+            artifact = 'com.google.protobuf:protoc:3.14.0'
+        }
+    }
+    plugins{
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.7.0"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+    generatedFilesBaseDir = "$projectDir/src"
+}
+
+sourceSets{
+    main{
+        proto{
+            srcDir "proto"
+            srcDir "src/main/grpc"
+        }
+    }
+}
