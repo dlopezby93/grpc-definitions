@@ -1,5 +1,8 @@
 syntax = "proto3";
-package com.test.grpc;
+
+option java_multiple_files =  true;
+
+package com.test.grpc.hello;
 
 message HelloRequest {
     string firstName = 1;
@@ -8,7 +11,6 @@ message HelloRequest {
 
 message HelloResponse {
     string greeting = 1;
-    string name = 2;
 }
 
 service HelloService {

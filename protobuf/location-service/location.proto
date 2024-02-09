@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_multiple_files =  true;
+
+package com.test.grpc.location;
+
+message LocationRequest {
+  string latitude = 1;
+  string longitude = 2;
+}
+
+message LocationResponse {
+  bool saved = 1;
+}
+
+service LocationService {
+  rpc save(LocationRequest) returns (LocationResponse);
+}
